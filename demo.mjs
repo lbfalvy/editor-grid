@@ -12,5 +12,5 @@ var main = new Cell(0,0,0,0);
 grid.appendChild(main);
 var actions = Edge.split(main, RIGHT, 0.3);
 var properties = Edge.split(actions, BOTTOM, 0.5);
-var console = Edge.split(main, BOTTOM, 0.3);
+var log = Edge.split(main, BOTTOM, 0.3);
 var tree = Edge.split(main, LEFT, 0.3);

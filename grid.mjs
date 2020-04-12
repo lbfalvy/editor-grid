@@ -72,8 +72,7 @@ function onGridGrab(ev) {
         ev.preventDefault();
         const move_filter = createResizeOverlay(move_callback);
         ev.currentTarget.appendChild(move_filter);
-    } 
-    else console.log("Failed to start movement");
+    }
 }
 
 /**
@@ -88,8 +87,6 @@ function createMoveCallback(ev) {
     // If one is empty, user clicked on the edge; don't do anything
     if (higher_side.length == 0 || lower_side.length == 0) 
     {
-        console.log("Dragging edge");
-        console.log("Grabbed edge: ",edge,"\n","Lines: ",higher_side,lower_side);
         return undefined;
     }
     const grabbed_side = edge.direction;
