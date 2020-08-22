@@ -7,7 +7,7 @@ const default_css_edge_properties = {
     [BOTTOM]: "bottom"
 };
 
-export default class extends HTMLElement
+export default class FloatingBlock extends HTMLElement
 {
     /**
      * Create a custom floating block
@@ -132,4 +132,12 @@ export default class extends HTMLElement
     {
         return [this[TOP],this[LEFT],this[BOTTOM],this[RIGHT]].join(";");
     }
+
+    static clone(block)
+    {
+        return new this(block[TOP], block[LEFT], block[RIGHT], 
+                        block[BOTTOM], block.targetProperties);
+    }
 }
+
+customElements.define("floating-block", FloatingBlock);

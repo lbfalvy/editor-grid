@@ -100,7 +100,7 @@ function createMoveCallback(ev) {
     const negative_movement_direction = isHorizontal(grabbed_side) ? LEFT : TOP;
     return (ev) => {
         const delta = is_horizontal ? ev.movementX : ev.movementY;
-        resize_dimension(lower_side, negative_movement_direction, higher_side, 
+        resizeDimension(lower_side, negative_movement_direction, higher_side, 
                          get_size, MIN_CELL_SIZE, delta);
     }
 }
@@ -150,7 +150,7 @@ function onGridRelease(ev) {
  * @param {Number} min_size The minimum size of any element
  * @param {Number} delta Resize amount
  */
-function resize_dimension(negative_side, lower_direction, positive_side,
+function resizeDimension(negative_side, lower_direction, positive_side,
     get_current_size, min_size, delta) 
 {
     const higher_direction = opposite(lower_direction);
@@ -164,3 +164,5 @@ function resize_dimension(negative_side, lower_direction, positive_side,
             cell.changeDistancePt(higher_direction, -delta);
     }
 }
+
+customElements.define("editor-grid", Grid);
