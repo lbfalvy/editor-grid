@@ -55,9 +55,8 @@ export default class Edge
      */
     getLine() {
         const facing = opposite(this.direction);
-        //const grid_size = this.grid.size[isHorizontal(this.direction) ? 0 : 1];
-        //const facing_position = grid_size - this.position;
         const facing_position = 1 - this.position;
+        console.log(this.grid);
         return [
             this.grid.getAlignedCells(this.direction, this.position),
             this.grid.getAlignedCells(facing, facing_position)
@@ -91,5 +90,54 @@ export default class Edge
     static split(cell, direction, ratio)
     {
         return (new Edge(cell, direction)).split(ratio);
+    }
+
+    findAlignedAcross() {
+        const neighbors = this.getLine();
+        // If there are no aligned cells in this direction, 
+        // it is a sole edge.
+        if (neighbors[0].length == 1) return neighbors[1];
+        // Failing that, make sure there are aligned cells
+        // on both sides
+        const clock = cw(this.direction);
+        const counterclock = ccw(this.direction);
+        const alignedCWEdge = neighbors[1].find(n => n[clock] == this.cell[clock])
+        const alignedCCWEdge = neighbors[1].find(n => n[counterclock] == this.cell[counterclock])
+        if(alignedCWEdge && alignedCCWEdge) {
+            // Then return that range
+            return neighbors[1].filter(n => {
+                if (n[clock] < this.cell[clock])
+                    return false;
+                if (n[counterclock] < this.cell[counterclock])
+                    return false;
+                return true;
+            })
+        }
+        return [];
+    }
+
+    static getAligned(cell)
+    {
+        for (const side of DIRECTIONS) {
+            const edge = new Edge(cell, side);
+            const aligned = edge.findAlignedAcross();
+            if (aligned.length) 
+                return [side, aligned];
+        }
+    }
+
+    static deleteCell(cell)
+    {
+        const aligned = this.getAligned(cell);
+        if (aligned) {
+            const side = aligned[0];
+            const neighbors = aligned[1];
+            const width = 1 - cell[side] - cell[opposite(side)];
+            for (const neighbor of neighbors) {
+                neighbor[opposite(side)] -= width;
+            }
+            cell.remove();
+        }
+        else throw new RangeError("The grid layout makes filling the gap impossible");
     }
 }
