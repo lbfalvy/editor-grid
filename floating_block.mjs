@@ -7,7 +7,7 @@ const default_css_edge_properties = {
     [BOTTOM]: "bottom"
 };
 
-export default class FloatingBlock extends HTMLElement
+export default class extends HTMLElement
 {
     /**
      * Create a custom floating block
