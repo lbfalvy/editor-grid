@@ -78,7 +78,7 @@ function onGridGrab(ev) {
 /**
  * Build a context for the grid movement
  * @param {MouseEvent} ev 
- * @returns {EventHandlerNonNull|undefined}
+ * @returns {EventHandlerNonNull|null}
  */
 function createMoveCallback(ev) {
     const edge = getClickedEdge(ev);
@@ -87,7 +87,7 @@ function createMoveCallback(ev) {
     // If one is empty, user clicked on the edge; don't do anything
     if (higher_side.length == 0 || lower_side.length == 0) 
     {
-        return undefined;
+        return null;
     }
     const grabbed_side = edge.direction;
     // Ensure that they are in the right order.
